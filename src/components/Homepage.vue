@@ -2,12 +2,17 @@
   <div>
       <div class="split right">
         <div>Hello</div>
-        <p>Name is {{author}}</p>
+        <div>
+          <p>Name is {{author}}</p>
+        </div>
       </div>
       <div class="split left">
         <h1 style="text-align:center;margin-top:10px;margin-bottom:20px;">Reading List</h1>
-        <div class="added-books">
-          <span style="border-style:groove;padding:5px;">{{name}}</span>
+        <div class="added-books" v-if="buttonPressed">
+          <!-- <span style="border-style:groove;padding:5px;">{{bookName}}</span> -->
+        </div>
+        <div>
+          <span v-for="book in books" v-bind:key="book" style="border-style:groove;padding:5px;overflow-wrap:break-word;display:inline-block;margin:10px;">{{book}}</span>
         </div>
         <div class="add-book">
           <div>
@@ -37,7 +42,7 @@
             </form>
           </div>
         </div>
-        <img class="img-button" src="@/assets/button.png" alt="no image">
+        <img v-on:click="addBook" class="img-button" src="@/assets/button.png" alt="no image">
       </div>
     </div>
 </template>
@@ -49,7 +54,19 @@ export default {
     return {
       name: '',
       genre: '',
-      author: 'Fred'
+      author: 'Fred',
+      buttonPressed: null,
+      bookName: '',
+      books: []
+    }
+  },
+  methods: {
+    addBook () {
+      console.log('Button presssed')
+      this.buttonPressed = true
+      this.bookName = this.name
+      this.books.push(this.bookName)
+      console.log(this.buttonPressed)
     }
   }
 }
